@@ -6,6 +6,9 @@ date: "`r Sys.Date()`"
 output: distill::distill_article
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 ## General Remarks
 
 -   You can submit your solutions in teams of up to 3 students.
@@ -160,6 +163,18 @@ e)  Combine both datasets into one using `bind_rows()`.
 f)  Combine the counts for same names to determine the most popular
     names across both years. Print out the top 10 names in a nicely
     formatted table for both years. Include a table caption.
+    
+    ```{r task3f, results='asis'}
+    library(knitr)
+    
+    most_popular_names <- combined_data %>%
+      group_by(Vorname) %>%
+      summarize(Total = sum(Anzahl, na.rm = TRUE)) %>%
+      arrange(desc(Total)) %>%
+      slice_head(n = 10)
+    
+    kable(most_popular_names, caption = "Top 10 Most Popular Baby Names in Munich (2022-2023)")
+    ```
 
 ## Exercise 4: Open Analysis (4 points)
 
