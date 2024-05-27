@@ -70,7 +70,7 @@ a)  Create a new repository on GitHub in your account named
     we are able to see it for grading. Add the link to the repository
     below:
     
-Link to the repository: https://github.com/wntamanda/exeRcise-sheet-3.git
+Link to the repository: <https://github.com/wntamanda/exeRcise-sheet-3.git>
 
 b)  Push your code to this new repository by copying and executing the
     snippet on github listed under
@@ -94,6 +94,34 @@ b)  Load the data for both years into R. Check the type of the count
     not numeric? Fix the problem in an appropriate manner, it is OK if
     some of the counts are inaccurate because of this. Explain your
     solution and the repercussions.
+    
+    ```{r task3b}
+    library(dplyr)
+    library(readr)
+    
+    data_2023 <- read_csv("vornamen-muenchen-2023.csv")
+    data_2022 <- read_csv("open_data_portal_2022.csv")
+    
+    # Checking the datatype of the 'Anzahl' variable
+    str(data_2023$Anzahl)
+    str(data_2022$Anzahl)
+    
+    data_2023 <- data_2023 %>%
+      mutate(Anzahl = as.numeric(gsub("[^0-9]", "", Anzahl)))
+    
+    data_2022 <- data_2022 %>%
+      mutate(Anzahl = as.numeric(gsub("[^0-9]", "", Anzahl)))
+    
+    # Checking the datatype of the 'Anzahl' variable after conversion
+    str(data_2023$Anzahl)
+    str(data_2022$Anzahl)
+    
+    # Checking for NA values in 'Anzahl' after conversion
+    sum(is.na(data_2023$Anzahl))
+    sum(is.na(data_2022$Anzahl))
+    ```
+
+**Explanation :** The `Anzahl` column was cleaned by using `gsub("[^0-9]", "", Anzahl)` to remove any non-numeric characters and then converting the cleaned strings to numbers with `as.numeric()`. This makes the `Anzahl` column numeric and ready for calculations. However, this method can introduce errors, such as turning ranges into a single numeric value. This approach cleans the data but can sometimes misinterpret the values.
 
 c)  Calculate the total number of babies born in Munich in 2022
     and 2023. Which year had the bigger baby-boom?
