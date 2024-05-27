@@ -125,6 +125,16 @@ b)  Load the data for both years into R. Check the type of the count
 
 c)  Calculate the total number of babies born in Munich in 2022
     and 2023. Which year had the bigger baby-boom?
+    
+    ```{r task3c}
+    babytotal_2023 <- sum(data_2023$Anzahl, na.rm = TRUE)
+    babytotal_2022 <- sum(data_2022$Anzahl, na.rm = TRUE)
+    
+    print(babytotal_2023)
+    print(babytotal_2022)
+    ```
+
+**Year :** 2022 had the bigger baby-boom.
 
 d)  Add a new column `year` to both datasets which holds the correct
     year for each.
