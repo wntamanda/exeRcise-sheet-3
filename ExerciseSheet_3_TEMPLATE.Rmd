@@ -199,6 +199,41 @@ d)  Come up with a (research) question you want to answer with the data
 **Question: ** Which age group and gender have the highest suicide rates in Germany, and how have these rates changed over time?
 
 e)  Use R to answer your chosen question.
+
+    ```{r task4e }
+    data <- read_csv("Suicide rates by sex and age (IHME, 2019).csv")
+        
+    library(tidyr)
+    library(ggplot2)
+        
+    germany_data <- data %>%
+        filter(Entity == "Germany")
+        
+    long_data <- germany_data %>%
+      gather(key = "Category", value = "SuicideRate", -Entity, -Year) %>%
+      separate(Category, into = c("MeasureType", "DetailInfo"), sep = " - ") %>%
+      filter(MeasureType == "Suicide rate") %>%
+      separate(DetailInfo, into = c("AgeGroup", "Gender"), sep = "\\s\\(") %>%
+      mutate(Gender = gsub("\\)", "", Gender))
+    
+    age_gender <- long_data %>%
+      group_by(AgeGroup, Gender) %>%
+      summarize(AverageSuicideRate = mean(SuicideRate, na.rm = TRUE)) %>%
+      arrange(desc(AverageSuicideRate))
+    
+    highest_suicide_rate_group <- age_gender %>%
+      slice_max(order_by = AverageSuicideRate, n = 1)
+    
+    highest_age_group <- highest_suicide_rate_group$AgeGroup[1]
+    highest_gender <- highest_suicide_rate_group$Gender[1]
+    
+    filtered_data <- long_data %>%
+      filter(AgeGroup == highest_age_group & Gender == highest_gender)
+    
+    trend_summary <- filtered_data %>%
+      group_by(Year) %>%
+      summarize(AverageSuicideRate = mean(SuicideRate, na.rm = TRUE))
+    ```
 f)  Create a meaningful plot / figure with the dataset. Make sure to
     provide a figure caption (via the chunk options / Rmarkdown) and
     correctly label the figure.
