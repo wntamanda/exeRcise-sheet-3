@@ -204,7 +204,6 @@ e)  Use R to answer your chosen question.
     data <- read_csv("Suicide rates by sex and age (IHME, 2019).csv")
         
     library(tidyr)
-    library(ggplot2)
         
     germany_data <- data %>%
         filter(Entity == "Germany")
@@ -237,6 +236,30 @@ e)  Use R to answer your chosen question.
 f)  Create a meaningful plot / figure with the dataset. Make sure to
     provide a figure caption (via the chunk options / Rmarkdown) and
     correctly label the figure.
+    
+    ```{r task4f, fig.cap = "Analysis of Suicide Rates for Germany's Highest Risk Demographic (1990-2017)"}
+    library(ggplot2)
+    ggplot(trend_summary, aes(x = Year, y = AverageSuicideRate)) +
+      geom_line(color = "blue", size = 1.2) +
+      geom_point(color = "red", size = 2) +
+      labs(
+        title = paste("Trends in Suicide Rates Over Time for", highest_age_group, "(", highest_gender, ") in Germany"),
+        subtitle = "Data from 1990-2017",
+        x = "Year",
+        y = "Average Suicide Rate",
+        caption = "Source: IHME, 2019"
+      ) +
+      theme_minimal(base_size = 10) +
+      theme(
+        plot.title = element_text(hjust = 0.5, face = "bold", size = 12),
+        plot.subtitle = element_text(hjust = 0.5, face = "italic", size = 10),
+        axis.title = element_text(face = "bold"),
+        axis.text = element_text(color = "black", size = 8),
+        axis.text.x = element_text(angle = 45, hjust = 1)
+      ) +
+      scale_x_continuous(breaks = seq(min(trend_summary$Year), max(trend_summary$Year), by = 4)) +
+      scale_y_continuous(labels = scales::comma)
+    ```
 
 ## Final Note
 
