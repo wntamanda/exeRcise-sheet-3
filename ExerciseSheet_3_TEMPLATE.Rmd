@@ -188,8 +188,8 @@ a)  Go to <https://github.com/owid/owid-datasets/tree/master/datasets>
 b)  Download the dataset and track it in git.
 c)  Put the name / title of the dataset and a link to it below.
 
--   Dataset Name: ...
--   Link: <https://github.com/owid/owid-datasets/>...
+-   Dataset Name: Suicide rates by sex and age (IHME, 2019).csv
+-   Link: <https://github.com/owid/owid-datasets/blob/master/datasets/Suicide%20rates%20by%20sex%20and%20age%20(IHME%2C%202019)/Suicide%20rates%20by%20sex%20and%20age%20(IHME%2C%202019).csv>
 
 d)  Come up with a (research) question you want to answer with the data
     and briefly explain why you believe this is an interesting question
